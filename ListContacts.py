@@ -1,9 +1,11 @@
+# This version only creates the CSV of contacts but doesn't split up the embedded data. That's next on the list. pandas!!
+
 import requests
 import json
 import io, os
 import sys
 import pandas
-from pandas.io.json import json_normalize
+import csv
  
  
 apiToken = 'MYAPITOKEN'
@@ -19,9 +21,13 @@ headers = {
 
 requestDownloadUrl = baseUrl
 requestDownload = requests.request("GET", requestDownloadUrl, headers=headers, stream=True)
- 
 
-data = json.loads(requestDownload.content)
-data = requestDownload.content
-df = pandas.read_csv(io.StringIO(data.decode("utf-8")))
-print(df)	
+data = json.loads(requestDownload.content)['result']['elements']
+
+#there is no header row in the csv, so the header names are just taken from the keys in the first row of the data
+with open('contacts.csv', 'w', encoding='utf8', newline='') as output_file:
+    mylist = csv.DictWriter(output_file, 
+                        fieldnames=data[0].keys(),
+                       )
+    mylist.writeheader()
+    mylist.writerows(data)
