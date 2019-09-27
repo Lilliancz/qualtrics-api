@@ -1,2 +1,3 @@
 # qualtrics-api
-Automating Qualtrics Brand Admin tasks through Qualtrics REST API
+
+Some of my automated tasks using Qualtrics API https://api.qualtrics.com using python
