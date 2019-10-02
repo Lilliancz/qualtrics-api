@@ -2,10 +2,9 @@
 
 import requests
 import json
-import io, os
-import sys
-import pandas
+import pandas as pd
 import csv
+
  
  
 apiToken = 'MYAPITOKEN'
@@ -19,15 +18,22 @@ headers = {
     "x-api-token": apiToken,
     } 
 
+
 requestDownloadUrl = baseUrl
 requestDownload = requests.request("GET", requestDownloadUrl, headers=headers, stream=True)
 
 data = json.loads(requestDownload.content)['result']['elements']
 
-#there is no header row in the csv, so the header names are just taken from the keys in the first row of the data
+# there is no header row in the csv, so the header names are just taken from the keys in the first row of the data
 with open('contacts.csv', 'w', encoding='utf8', newline='') as output_file:
-    mylist = csv.DictWriter(output_file, 
-                        fieldnames=data[0].keys(),
-                       )
+    mylist = csv.DictWriter(output_file,
+                            fieldnames=data[0].keys(),
+                            )
     mylist.writeheader()
     mylist.writerows(data)
+
+df = pd.read_csv('contacts.csv')
+ed = df.embeddedData.apply(eval)
+df2 = ed.apply(pd.Series)
+final = pd.concat([df, df2], axis=1)
+final.to_csv('rest.csv')
