@@ -4,8 +4,6 @@ import requests
 import json
 import pandas as pd
 import csv
-
- 
  
 apiToken = 'MYAPITOKEN'
 mailingListID = "ML_XXXXXXXXXXXXXX"
@@ -17,7 +15,6 @@ headers = {
     "content-type": "application/json",
     "x-api-token": apiToken,
     } 
-
 
 requestDownloadUrl = baseUrl
 requestDownload = requests.request("GET", requestDownloadUrl, headers=headers, stream=True)
@@ -32,8 +29,16 @@ with open('contacts.csv', 'w', encoding='utf8', newline='') as output_file:
     mylist.writeheader()
     mylist.writerows(data)
 
+#reads csv, but all values are loaded as string. 
 df = pd.read_csv('contacts.csv')
+
+#convert embedded data to dict using apply(eval)
+# to check type, use .apply(type)
 ed = df.embeddedData.apply(eval)
 df2 = ed.apply(pd.Series)
+
+#concatenate old with new
 final = pd.concat([df, df2], axis=1)
+
+#save to csv
 final.to_csv('rest.csv')
