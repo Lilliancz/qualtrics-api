@@ -40,5 +40,9 @@ df2 = ed.apply(pd.Series)
 #concatenate old with new
 final = pd.concat([df, df2], axis=1)
 
+#drop junk
+final=final.drop(columns=["id",	"firstName","embeddedData",	"lastName",	"email",	"language",	"unsubscribed",	"responseHistory",	"emailHistory",	"A_Info",	"B_Info",	"C_Info",	"D_Info",	"E_Info",	"F_Info",	"G_Info",	"H_Info",	"I_Info",	"J_Info",	"DateTaken",	"TriggerResponseID",	"TriggerSurveyID"])
+
+
 #save to csv
 final.to_csv('rest.csv')
