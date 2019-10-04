@@ -1,3 +1,10 @@
+# This file downloads a contact list from the Qualtrics research core
+# It splits the embedded data dictionary into separate columns
+# It also removes columns (see line 50)
+# If you need to preserve those columns that have been dropped, just delete them from the list
+# The column list also includes more columns than you might have since it is specific to 
+# the lending game contact list. Just remove those that don't match your list.
+
 import requests
 import json
 import pandas as pd
