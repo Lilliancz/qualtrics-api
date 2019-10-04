@@ -1,19 +1,9 @@
-
-# [START gae_python37_app]
-from flask import Flask
-
-
-# If `entrypoint` is not defined in app.yaml, App Engine will look for an app
-# called `app` in `main.py`.
-app = Flask(__name__)
-
-
-@app.route('/')
-
 import requests
 import json
 import pandas as pd
 import csv
+import os
+import time
 
 # this version accepts manual input from the user
 apiToken = input("Enter your API token: ")
@@ -58,12 +48,6 @@ final = final.drop(
              "J_Info", "DateTaken", "TriggerResponseID", "TriggerSurveyID"])
 
 # save to csv
-final.to_csv('rest.csv')
-
-
-if __name__ == '__main__':
-    # This is used when running locally only. When deploying to Google App
-    # Engine, a webserver process such as Gunicorn will serve the app. This
-    # can be configured by adding an `entrypoint` to app.yaml.
-    app.run(host='127.0.0.1', port=8080, debug=True)
-# [END gae_python37_app]
+timestr = time.strftime("%Y%m%d-%H%M%S")
+final.to_csv('lendingGameData'+timestr+".csv")
+os.remove("contacts.csv")
