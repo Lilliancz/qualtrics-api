@@ -23,14 +23,11 @@ class App(QWidget):
     def initUI(self):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
-
         self.labelA = QLabel(self)
         self.labelA.setText('Click the button below to get lending game data')
         self.labelA.move(120, 100)
         self.labelA.adjustSize()
         self.labelB = QLabel(self)
-
-
         button = QPushButton('Click to get CSV', self)
         button.setToolTip('Get CSV here')
         button.move(250, 200)
@@ -40,7 +37,9 @@ class App(QWidget):
     @pyqtSlot()
     def on_click(self):
 
-        # must specify
+        # you must specify the api token and mailing list ID in order for this code to work. 
+	# I haven't added any user input here since this QT version is for users who don't 
+	# have access to the token or IDs
         apiToken = ""
         mailingListID = ""
         fileFormat = "csv"
