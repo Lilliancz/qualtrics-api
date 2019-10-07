@@ -101,3 +101,4 @@ if __name__ == '__main__':
 
 # used pyinstaller to get this to be added as a single exe file for
 # non-python users to run code
+# pyinstaller qt.py -F --onefile
